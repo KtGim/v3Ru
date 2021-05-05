@@ -9,7 +9,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
-    "build": "rm -rf lib &&  rollup --config rollup.config.js"
+    "build": "rm -rf lib &&  rollup --config rollup.config.js",
+    "publish": "npm version patch && npm publish"
   },
   "author": "",
   "license": "ISC",
