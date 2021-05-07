@@ -10,4 +10,8 @@ const Demo = defineComponent({
   }
 })
 
+Demo.install = function (Vue: any) {
+    Vue.component(Demo.name, Demo);
+};
+
 export default Demo;
