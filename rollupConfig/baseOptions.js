@@ -46,6 +46,7 @@ const commonConf = (input, cssOutput) => {
       }),
       less({
         output: cssOutput,
+        insert: true,
       }),
       tsPlugin,
       babel({
