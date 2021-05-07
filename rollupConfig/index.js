@@ -20,3 +20,15 @@ dirs.forEach(async (dir) => {
     console.log(`${dir}打包失败 err: ${err}`)
   }
 })
+
+// 打包 index.tsx
+const formatIndex = async() => {
+  try {
+    const bundle = await rollup.rollup(commonConf(`${p}/index.ts`, `${o}/index.css`));
+    await bundle.write(outputMap(`${o}/index.js`));
+  } catch(err) {
+    console.log(`index.ts 打包失败: ${err}`)
+  }
+}
+
+formatIndex();

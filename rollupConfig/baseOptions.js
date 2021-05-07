@@ -6,8 +6,8 @@ const vue = require('rollup-plugin-vue')
 const { babel } = require('@rollup/plugin-babel')
 const less = require('rollup-plugin-less')
 const jsx = require("acorn-jsx")
-const packageJSON = require('../package.json')
 
+const packageJSON = require('../package.json')
 const external = ['vue'];
 const globals = { vue: 'Vue' };
 
@@ -40,14 +40,21 @@ const commonConf = (input, cssOutput) => {
     input,
     plugins:[
       // esPlugin,
-      vue(),
-      tsPlugin,
-      nodeResolve({ mainFields: ["module", "main", "browser"] }),
-      commonjs({ extensions, sourceMap: true }),
-      babel({ babelHelpers: "bundled", extensions }), // babelHelpers是bable的最佳实践方案 extensions编译的扩展文件
+      vue({
+        css: true,
+        compileTemplate: true
+      }),
       less({
         output: cssOutput,
       }),
+      tsPlugin,
+      babel({
+        babelHelpers: "runtime",
+        extensions,
+        exclude: 'node_modules/**', // 防止打包node_modules下的文件
+      }), // babelHelpers是bable的最佳实践方案 extensions编译的扩展文件
+      nodeResolve(),
+      commonjs({ extensions, sourceMap: true }),
       // terser()
     ],
     acornInjectPlugins: [jsx()],
@@ -59,9 +66,10 @@ const outputMap = (output) => {
   if(!output) return;
   return {
     file: output, // es6模块
-    format: 'es',
-    sourcemap: true,
-    globals,
+    format: 'cjs',
+    // sourcemap: true,
+    exports: 'named',
+    globals
   }
 }
 
