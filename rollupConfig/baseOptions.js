@@ -66,7 +66,7 @@ const outputMap = (output) => {
   if(!output) return;
   return {
     file: output, // es6模块
-    format: 'cjs',
+    format: 'esm',
     // sourcemap: true,
     exports: 'named',
     globals
