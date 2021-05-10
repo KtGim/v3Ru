@@ -5,30 +5,68 @@ const { commonConf, outputMap } = require('./rollupConfig/baseOptions');
 
 const root = path.resolve(__dirname, './components')
 const o = path.resolve(__dirname, './lib');
+const components = fs
+  .readdirSync(root)
+    .filter((f) =>
+      fs.statSync(path.join(root, f)).isDirectory()
+    )
 
-// module.exports = {
-//   ...commonConf(`${root}/index.ts`, './lib/index.css'),
-//   output: {
-//     // file: 'dist/bundle.js', // 代码拆分需要输出多个文件，所以不能使用file
-//     // format: 'iife' // 使用代码拆分打包，输出格式不能是iife,因为自执行函数会把所有的模块都放到同一个函数当中，并不会像webpack一样有引导代码，所以iife没有办法实现代码拆分
-//     dir: 'lib', // 需要输出多个文件可以使用dir的参数
-//     format: 'esm', // 想要使用代码查分只能使用amd或者CommonJS，那在浏览器中只能使用amd标准
-//   }
-// }
+const entries = {
+  index: './components/index.ts',
+  ...components.reduce((obj, name) => {
+    obj[name] = (root + `/${name}/index.tsx`)
+    return obj
+  }, {})
+}
 
-module.exports = fs.readdirSync(root)
-    .filter(item => fs.statSync(path.resolve(root, item)).isDirectory())
-    .map(item => {
-        // 获取每个包的配置文件
-        return {
-            ...commonConf(`${root}/${item}/index.tsx`),
-            output: {
-              ...outputMap(`${o}/${item}/index.js`)
-            },
-        }
-    }).concat({
-      ...commonConf(`${root}/index.ts`),
-      output: {
-        ...outputMap(`${o}/index.js`)
-      },
-    })
+console.log(entries);
+
+module.exports = {
+  ...commonConf(`${root}/index.ts`),
+  input: entries,
+  output: {
+    format: 'cjs',
+    dir: 'lib',
+    exports: 'named'
+  },
+}
+
+
+// module.exports = fs.readdirSync(root)
+//     .filter(item => fs.statSync(path.resolve(root, item)).isDirectory())
+//     .map(item => {
+//         // 获取每个包的配置文件
+//         return {
+//             plugins:[
+//       // esPlugin,
+//       vue({
+//         css: true,
+//         compileTemplate: true
+//       }),
+//       less({
+//         output: output ? output : false, 
+//         insert: true, // 自动 添加到 header 标签内
+//       }),
+//       tsPlugin,
+//       babel({
+//         babelHelpers: "runtime",
+//         extensions,
+//         exclude: 'node_modules/**', // 防止打包node_modules下的文件
+//       }), // babelHelpers是bable的最佳实践方案 extensions编译的扩展文件
+//       nodeResolve(),
+//       commonjs({ extensions, sourceMap: true }),
+//       // terser()
+//     ],
+//     acornInjectPlugins: [jsx()],
+//     external: ['vue'],
+//     preserveSymlinks: true,
+//             output: {
+//               ...outputMap(`${o}/${item}/index.js`)
+//             },
+//         }
+//     }).concat({
+//       ...commonConf(`${root}/index.ts`),
+//       output: {
+//         ...outputMap(`${o}/index.js`)
+//       },
+//     })
