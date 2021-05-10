@@ -10,7 +10,7 @@ const Demo = defineComponent({
   }
 })
 
-Demo.install = function (Vue: any) {
+Demo.install = function (Vue: App) {
     Vue.component(Demo.name, Demo);
 };
 
