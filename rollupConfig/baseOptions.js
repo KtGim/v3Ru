@@ -33,7 +33,7 @@ const tsPlugin = ts({
 // })
 
 // 基础配置
-const commonConf = (input) => {
+const commonConf = (input, output) => {
   if(!input) return;
   
   return {
@@ -45,7 +45,7 @@ const commonConf = (input) => {
         compileTemplate: true
       }),
       less({
-        output: false, 
+        output: output ? output : false, 
         insert: true, // 自动 添加到 header 标签内
       }),
       tsPlugin,
@@ -67,7 +67,7 @@ const outputMap = (output) => {
   if(!output) return;
   return {
     file: output, // es6模块
-    format: 'esm',
+    format: 'cjs',
     // sourcemap: true,
     exports: 'named',
     globals

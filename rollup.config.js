@@ -21,14 +21,14 @@ module.exports = fs.readdirSync(root)
     .map(item => {
         // 获取每个包的配置文件
         return {
-            ...commonConf(`${root}/${item}/index.tsx`, `${o}/${item}/index.css`),
-            output: [
-              outputMap(`${o}/${item}/index.js`)
-            ],
+            ...commonConf(`${root}/${item}/index.tsx`),
+            output: {
+              ...outputMap(`${o}/${item}/index.js`)
+            },
         }
     }).concat({
-      ...commonConf(`${root}/index.ts`, `${o}/index.css`),
-      output: [
-        outputMap(`${o}/index.js`)
-      ],
+      ...commonConf(`${root}/index.ts`),
+      output: {
+        ...outputMap(`${o}/index.js`)
+      },
     })
