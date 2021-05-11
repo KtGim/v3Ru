@@ -46,7 +46,7 @@ const commonConf = (input, output) => {
       }),
       less({
         output: output ? output : false, 
-        insert: true, // 自动 添加到 header 标签内
+        insert: !output, // 自动 添加到 header 标签内
       }),
       tsPlugin,
       babel({
@@ -67,7 +67,7 @@ const outputMap = (output) => {
   if(!output) return;
   return {
     file: output, // es6模块
-    format: 'cjs',
+    format: 'esm',
     // sourcemap: true,
     exports: 'named',
     globals

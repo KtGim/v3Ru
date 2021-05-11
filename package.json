@@ -2,7 +2,7 @@
   "name": "v3ru",
   "version": "1.0.15",
   "description": "This template should help get you started developing with Vue 3 and Typescript in Vite.",
-  "main": "lib/index.js",
+  "main": "lib/esm/index.js",
   "directories": {
     "doc": "docs"
   },
