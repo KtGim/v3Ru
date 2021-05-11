@@ -7,11 +7,11 @@
 </template>
 <script>
   import { defineComponent } from 'vue'
-  import { HelloWorld, Demo } from 'thc'
+  import { HW, Demo } from '../components/index.ts'
   export default defineComponent({
     name: 'App',
     components: {
-      HelloWorld,
+      HelloWorld: HW,
       Demo,
     }
   })
