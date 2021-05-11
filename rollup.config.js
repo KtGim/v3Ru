@@ -37,7 +37,7 @@ const capitalize = s => {
 const mapComponent = name => {
   return [
     {
-      ...commonConf(`${root}/${name}/index.tsx`, `${o}/${name}/style/index.css`),
+      ...commonConf(`${root}/${name}/index.tsx`),
       output: {
         format: "umd",
         name: capitalize(name),
@@ -64,18 +64,18 @@ const esConfig = {
   },
 };
 
-// const merged = {
-//   ...commonConf(`${root}/index.ts`),
-//   input: "components/index.ts",
-//   output: {
-//     format: "esm",
-//     file: "lib/index.esm.js"
-//   },
-// };
+const merged = {
+  ...commonConf(`${root}/index.ts`),
+  input: "components/index.ts",
+  output: {
+    format: "esm",
+    file: "lib/index.esm.js"
+  },
+};
 
 module.exports = [
   esConfig,
-  // merged,
+  merged,
   ...ind
 ]
 

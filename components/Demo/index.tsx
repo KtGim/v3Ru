@@ -1,5 +1,5 @@
 import { App, defineComponent } from 'vue';
-import './index.less';
+import './style';
 
 const Demo = defineComponent({
   name: 'Demo',
