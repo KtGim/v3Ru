@@ -37,7 +37,7 @@ const capitalize = s => {
 const mapComponent = name => {
   return [
     {
-      ...commonConf(`${root}/${name}/index.tsx`),
+      ...commonConf(`${root}/${name}/index.tsx`, `${o}/${name}/style/index.css`),
       output: {
         format: "umd",
         name: capitalize(name),
